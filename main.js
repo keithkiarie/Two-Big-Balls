@@ -7,7 +7,10 @@ gamecanvas.height = window.innerHeight * 0.95;
 
 let ctx = gamecanvas.getContext("2d");
 
-let ball_displacement = 10;
+let ball_displacement = {
+    default: 10,
+    sped: 15
+};
 
 let platform = {
     x_start: gamecanvas.width * 0.1,
@@ -55,12 +58,15 @@ window.addEventListener('keyup', function (e) {
     //ball1 keyup
     if (e.keyCode == 87) {
         balls.ball1.key = false;
+        balls.ball1.velocity = ball_displacement.default;
     }
     if (e.keyCode == 65) {
         balls.ball1.key = false;
+        balls.ball1.velocity = ball_displacement.default;
     }
     if (e.keyCode == 68) {
         balls.ball1.key = false;
+        balls.ball1.velocity = ball_displacement.default;
     }
 });
 
@@ -69,12 +75,15 @@ window.addEventListener('keyup', function (e) {
     //ball2 keyup
     if (e.keyCode == 38) {
         balls.ball2.key = false;
+        balls.ball2.velocity = ball_displacement.default;
     }
     if (e.keyCode == 37) {
         balls.ball2.key = false;
+        balls.ball2.velocity = ball_displacement.default;
     }
     if (e.keyCode == 39) {
         balls.ball2.key = false;
+        balls.ball2.velocity = ball_displacement.default;
     }
 });
 
@@ -90,7 +99,7 @@ function Ball(x, y, radius, color) {
     this.falling = false;
     this.within_platform = true;
     this.rising = false;
-    this.velocity = 0;
+    this.velocity = ball_displacement.default;
 
     this.draw = () => {
         ctx.beginPath();
@@ -103,15 +112,23 @@ function Ball(x, y, radius, color) {
     this.move = () => {
         //left
         if (this.key == "left") {
-            this.x -= ball_displacement;
+            this.x -= this.velocity;
         }
         //right
         if (this.key == "right") {
-            this.x += ball_displacement;
+            this.x += this.velocity;
         }
         //up
         if (this.key == "up" && this.falling == false) {
             this.rising = true;
+        }
+
+        if (this.key == "left" || this.key == "right") {
+            setTimeout(() => {
+                if (this.key != false) {
+                    this.velocity = ball_displacement.sped;
+                }
+            }, 500);
         }
 
 
