@@ -9,7 +9,7 @@ let ctx = gamecanvas.getContext("2d");
 
 let ball_displacement = {
     default: 10,
-    sped: 15
+    speed_factor: 1.5
 };
 
 let platform = {
@@ -31,9 +31,11 @@ window.addEventListener('keydown', function (e) {
     }
     if (e.keyCode == 65) {
         balls.ball1.key = 'left';
+        balls.ball1.velocity = -ball_displacement.default; //left
     }
     if (e.keyCode == 68) {
         balls.ball1.key = 'right';
+        balls.ball1.velocity = +ball_displacement.default; //right
     }
 
 });
@@ -46,9 +48,11 @@ window.addEventListener('keydown', function (e) {
     }
     if (e.keyCode == 37) {
         balls.ball2.key = 'left';
+        balls.ball2.velocity = -ball_displacement.default; //left
     }
     if (e.keyCode == 39) {
         balls.ball2.key = 'right';
+        balls.ball2.velocity = +ball_displacement.default; //right
     }
 
 });
@@ -57,16 +61,17 @@ window.addEventListener('keyup', function (e) {
 
     //ball1 keyup
     if (e.keyCode == 87) {
-        balls.ball1.key = false;
-        balls.ball1.velocity = ball_displacement.default;
+        balls.ball1.key = false; //up
     }
     if (e.keyCode == 65) {
         balls.ball1.key = false;
-        balls.ball1.velocity = ball_displacement.default;
+        balls.ball1.velocity = 0;
+        balls.ball1.sped_up = false;
     }
     if (e.keyCode == 68) {
         balls.ball1.key = false;
-        balls.ball1.velocity = ball_displacement.default;
+        balls.ball1.velocity = 0;
+        balls.ball2.sped_up = false;
     }
 });
 
@@ -75,15 +80,16 @@ window.addEventListener('keyup', function (e) {
     //ball2 keyup
     if (e.keyCode == 38) {
         balls.ball2.key = false;
-        balls.ball2.velocity = ball_displacement.default;
     }
     if (e.keyCode == 37) {
         balls.ball2.key = false;
-        balls.ball2.velocity = ball_displacement.default;
+        balls.ball2.velocity = 0;
+        balls.ball2.sped_up = false;
     }
     if (e.keyCode == 39) {
         balls.ball2.key = false;
-        balls.ball2.velocity = ball_displacement.default;
+        balls.ball2.velocity = 0;
+        balls.ball2.sped_up = false;
     }
 });
 
@@ -93,13 +99,20 @@ function Ball(x, y, radius, color) {
     this.radius = radius;
     this.x = x;
     this.y = y;
+
+    this.right_edge = this.x + this.radius;
+    this.left_edge = this.x - this.radius;
+
     this.gravity = 12;
     this.color = color;
     this.key = false;
     this.falling = false;
     this.within_platform = true;
     this.rising = false;
-    this.velocity = ball_displacement.default;
+    this.velocity = 0;
+
+    this.sped_up = false;
+    
 
     this.draw = () => {
         ctx.beginPath();
@@ -110,14 +123,9 @@ function Ball(x, y, radius, color) {
     };
 
     this.move = () => {
-        //left
-        if (this.key == "left") {
-            this.x -= this.velocity;
-        }
-        //right
-        if (this.key == "right") {
-            this.x += this.velocity;
-        }
+
+        this.x += this.velocity;
+
         //up
         if (this.key == "up" && this.falling == false) {
             this.rising = true;
@@ -125,8 +133,9 @@ function Ball(x, y, radius, color) {
 
         if (this.key == "left" || this.key == "right") {
             setTimeout(() => {
-                if (this.key != false) {
-                    this.velocity = ball_displacement.sped;
+                if (this.key != false && !this.sped_up) {
+                    this.velocity *= ball_displacement.speed_factor;
+                    this.sped_up = true;
                 }
             }, 500);
         }
@@ -172,10 +181,26 @@ function start_game() {
 
 function gameplay() {
     mid_air();
-
+    collision();
 
     drawing();
     requestAnimationFrame(gameplay);
+}
+
+function collision() {
+    let ball1 = balls.ball1;
+    let ball2 = balls.ball2;
+
+    if (ball1.right_edge + ball1.velocity >= ball2.left_edge + ball2.velocity && ball1.x < ball2.x) {
+        alert('boom');
+    } else if (ball2.right_edge + ball2.velocity >= ball1.left_edge + ball1.velocity && ball2.x < ball1.x) {
+        alert('boom');
+    } else if (ball1.left_edge + ball1.velocity <= ball2.right_edge + ball2.velocity && ball1.x > ball2.x) {
+        alert('boom');
+    } else if (ball2.left_edge + ball2.velocity <= ball1.right_edge + ball1.velocity && ball1.x < ball2.x) {
+        alert('boom');
+    }
+
 }
 
 function mid_air() {
