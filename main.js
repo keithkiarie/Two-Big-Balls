@@ -188,12 +188,10 @@ function welcome() {
 
     ctx.font = "30px Arial";
     ctx.textAlign = "center";
-    ctx.fillStyle = "#FFFFFF"
     ctx.fillText("Push your oppenent off the platform", gamecanvas.width / 2, 150);
 
     ctx.font = "15px Arial";
     ctx.textAlign = "center";
-    ctx.fillStyle = "#FFFFFF"
     ctx.fillText("Press Space Bar to begin", gamecanvas.width / 2, 250);
 }
 welcome();
