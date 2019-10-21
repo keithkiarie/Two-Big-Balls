@@ -136,6 +136,7 @@ function Ball(x, y, radius, color) {
         //fall off
         if (this.x < platform.x_start || this.x > platform.x_end) {
             this.within_platform = false;
+            this.rising = false;
             this.falling = true;
             this.x < platform.x_start ? this.x = platform.x_start - this.radius - 5 : this.x = platform.x_end + this.radius + 5;
         }
