@@ -63,7 +63,7 @@ function gameplay() {
         ctx.font = "30px Arial";
         ctx.textAlign = "center";
         ctx.fillStyle = "#FFFFFF"
-        ctx.fillText("Press Space Bar to start game", gamecanvas.width / 2, 50);
+        ctx.fillText("Press Space Bar to restart game", gamecanvas.width / 2, 50);
     }
 }
 
