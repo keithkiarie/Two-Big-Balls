@@ -7,6 +7,7 @@ gamecanvas.height = window.innerHeight * 0.95;
 
 let ctx = gamecanvas.getContext("2d");
 
+
 let ball_displacement = {
     default: 10,
     speed_factor: 1.5
@@ -55,6 +56,7 @@ function gameplay() {
     friction();
 
     drawing();
+    labels();
     requestAnimationFrame(gameplay);
 }
 
@@ -64,6 +66,21 @@ function friction() {
             balls[i].velocity *= 0.99;
         }
     }
+}
+
+function labels() {
+    //draw labels
+    ctx.beginPath();
+    ctx.arc(gamecanvas.width * 0.05, gamecanvas.height * 0.05, 10, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.fillStyle = "red";
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(gamecanvas.width * 0.95, gamecanvas.height * 0.05, 10, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.fillStyle = "green";
+    ctx.fill();
 }
 
 function collision() {
@@ -117,6 +134,8 @@ function collision() {
         ball1.velocity = ball2.velocity;
         ball2.velocity = temp;
     }
+
+    
 
 }
 
