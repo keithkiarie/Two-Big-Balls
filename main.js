@@ -99,8 +99,6 @@ function collision() {
                 ball2.y = ball1.y - ball1.radius;
             }
         } else if (ball1.x < ball2.x && ball2.x - ball1.x <= ball2.radius * 2) {
-            ball1.in_collision = true;
-            ball2.in_collision = true;
             if (ball1.y + ball1.radius >= ball2.y && ball1.falling == true) {
                 ball1.velocity = -ball_displacement.default;
                 ball2.velocity = ball_displacement.default;
@@ -109,8 +107,6 @@ function collision() {
                 ball1.velocity = -ball_displacement.default;
             }
         } else if (ball1.x > ball2.x && ball1.x - ball2.x <= ball1.radius * 2) {
-            ball1.in_collision = true;
-            ball2.in_collision = true;
             if (ball1.y + ball1.radius >= ball2.y && ball1.falling == true) {
                 ball1.velocity = ball_displacement.default;
                 ball2.velocity = -ball_displacement.default;
@@ -118,9 +114,6 @@ function collision() {
                 ball2.velocity = ball_displacement.default;
                 ball1.velocity = -ball_displacement.default;
             }
-        } else {
-            ball1.in_collision = false;
-            ball2.in_collision = false;
         }
     }
 

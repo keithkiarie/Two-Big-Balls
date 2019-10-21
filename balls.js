@@ -14,8 +14,6 @@ function Ball(x, y, radius, color) {
     this.rising = false;
     this.velocity = 0;
 
-    this.in_collision = false;
-
     this.sped_up = false;
 
 
