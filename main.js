@@ -90,6 +90,7 @@ function collision() {
     //one ball falling on another
     if (ball1.y != ball2.y && ball1.within_platform == true && ball2.within_platform == true) {
         if (ball1.x == ball2.x) {
+            //falling directly on top of another
             if (ball1.y + ball1.radius >= ball2.y && ball1.falling == true) {
                 ball1.falling = false;
                 ball1.y = ball2.y - ball2.radius;
@@ -97,7 +98,7 @@ function collision() {
                 ball2.falling = false;
                 ball2.y = ball1.y - ball1.radius;
             }
-        } else if (ball1.x < ball2.x && ball2.x - ball1.x <= ball2.radius + 5) {
+        } else if (ball1.x < ball2.x && ball2.x - ball1.x <= ball2.radius * 2) {
             ball1.in_collision = true;
             ball2.in_collision = true;
             if (ball1.y + ball1.radius >= ball2.y && ball1.falling == true) {
@@ -107,7 +108,7 @@ function collision() {
                 ball2.velocity = ball_displacement.default;
                 ball1.velocity = -ball_displacement.default;
             }
-        } else if (ball1.x > ball2.x && ball1.x - ball2.x <= ball1.radius + 5) {
+        } else if (ball1.x > ball2.x && ball1.x - ball2.x <= ball1.radius * 2) {
             ball1.in_collision = true;
             ball2.in_collision = true;
             if (ball1.y + ball1.radius >= ball2.y && ball1.falling == true) {
@@ -135,7 +136,14 @@ function collision() {
         ball2.velocity = temp;
     }
 
-    
+    //if they're stuck
+    if (balls.ball1.x < balls.ball2.x && balls.ball2.x - balls.ball1.x <= balls.ball1.radius * 2 && balls.ball1.y == balls.ball2.y) {
+        balls.ball1.x -= balls.ball1.radius / 2;
+        balls.ball2.x += balls.ball2.radius / 2;
+    } else if (balls.ball1.x > balls.ball2.x && balls.ball1.x - balls.ball2.x <= balls.ball1.radius * 2 && balls.ball1.y == balls.ball2.y) {
+        balls.ball1.x -= balls.ball1.radius / 2;
+        balls.ball2.x += balls.ball2.radius / 2;
+    }
 
 }
 
