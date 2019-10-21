@@ -6,6 +6,10 @@ gamecanvas.height = window.innerHeight;
 
 
 let ctx = gamecanvas.getContext("2d");
+let scores = {
+    player_one: 0,
+    player_two: 0
+}
 
 
 let ball_displacement = {
@@ -42,8 +46,8 @@ function start_game() {
     erase_canvas();
 
     //create the balls
-    balls.ball1 = new Ball(gamecanvas.width * 0.15, gamecanvas.height * 0.7 - 50, 50, "red");
-    balls.ball2 = new Ball(gamecanvas.width * 0.85, gamecanvas.height * 0.7 - 50, 50, "green");
+    balls.ball1 = new Ball(gamecanvas.width * 0.15, gamecanvas.height * 0.7 - 50, 50, "red", 1);
+    balls.ball2 = new Ball(gamecanvas.width * 0.85, gamecanvas.height * 0.7 - 50, 50, "green", 2);
 
     gameplay();
 }
@@ -55,6 +59,8 @@ function gameplay() {
 
     drawing();
     labels();
+    display_scores();
+    
     if (game_session) {
         requestAnimationFrame(gameplay);
     } else {
@@ -65,7 +71,12 @@ function gameplay() {
     }
 }
 
-
+function display_scores() {
+    ctx.font = "30px Arial";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#FFFFFF"
+    ctx.fillText(`${scores.player_one} : ${scores.player_two}`, gamecanvas.width / 2, 150);
+}
 
 function labels() {
     //draw labels
