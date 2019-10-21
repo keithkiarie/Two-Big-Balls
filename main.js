@@ -1,8 +1,8 @@
 let gamecanvas = document.getElementById('gamecanvas');
 let game_session = false;
 
-gamecanvas.width = window.innerWidth * 0.99;
-gamecanvas.height = window.innerHeight * 0.95;
+gamecanvas.width = window.innerWidth;
+gamecanvas.height = window.innerHeight;
 
 
 let ctx = gamecanvas.getContext("2d");
