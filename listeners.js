@@ -6,7 +6,9 @@ window.addEventListener('keydown', function (e) {
 
     //ball1 keydown
     if (e.keyCode == 87) {
-        balls.ball1.key = 'up';
+        if (!balls.ball1.in_collision) {
+            balls.ball1.key = 'up';
+        }
     }
     if (e.keyCode == 65) {
         balls.ball1.key = 'left';
@@ -23,7 +25,10 @@ window.addEventListener('keydown', function (e) {
 
     //ball2 keydown
     if (e.keyCode == 38) {
-        balls.ball2.key = 'up';
+        if (!balls.ball2.in_collision) {
+            balls.ball2.key = 'up';
+        }
+
     }
     if (e.keyCode == 37) {
         balls.ball2.key = 'left';

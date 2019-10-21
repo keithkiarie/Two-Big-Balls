@@ -39,6 +39,7 @@ let balls = {
 };
 
 function start_game() {
+    game_session = true;
     erase_canvas();
 
     //create the balls
@@ -51,9 +52,18 @@ function start_game() {
 function gameplay() {
     mid_air();
     collision();
+    friction();
 
     drawing();
     requestAnimationFrame(gameplay);
+}
+
+function friction() {
+    for (const i in balls) {
+        if (balls[i].key == false) {
+            balls[i].velocity *= 0.99;
+        }
+    }
 }
 
 function collision() {
@@ -70,7 +80,9 @@ function collision() {
                 ball2.falling = false;
                 ball2.y = ball1.y - ball1.radius;
             }
-        } else if (ball1.x < ball2.x) {
+        } else if (ball1.x < ball2.x && ball2.x - ball1.x <= ball2.radius + 5) {
+            ball1.in_collision = true;
+            ball2.in_collision = true;
             if (ball1.y + ball1.radius >= ball2.y && ball1.falling == true) {
                 ball1.velocity = -ball_displacement.default;
                 ball2.velocity = ball_displacement.default;
@@ -78,7 +90,9 @@ function collision() {
                 ball2.velocity = ball_displacement.default;
                 ball1.velocity = -ball_displacement.default;
             }
-        } else if (ball1.x > ball2.x) {
+        } else if (ball1.x > ball2.x && ball1.x - ball2.x <= ball1.radius + 5) {
+            ball1.in_collision = true;
+            ball2.in_collision = true;
             if (ball1.y + ball1.radius >= ball2.y && ball1.falling == true) {
                 ball1.velocity = ball_displacement.default;
                 ball2.velocity = -ball_displacement.default;
@@ -86,6 +100,9 @@ function collision() {
                 ball2.velocity = ball_displacement.default;
                 ball1.velocity = -ball_displacement.default;
             }
+        } else {
+            ball1.in_collision = false;
+            ball2.in_collision = false;
         }
     }
 
