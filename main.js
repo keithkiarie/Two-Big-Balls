@@ -59,6 +59,11 @@ function gameplay() {
     labels();
     if (game_session) {
         requestAnimationFrame(gameplay);
+    } else {
+        ctx.font = "30px Arial";
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#FFFFFF"
+        ctx.fillText("Press Space Bar to start game", gamecanvas.width / 2, 50);
     }
 }
 
