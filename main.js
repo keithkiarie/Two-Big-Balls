@@ -108,11 +108,18 @@ function welcome() {
     ctx.fillText("Two Big Balls", gamecanvas.width / 2, 75);
 
     ctx.font = "30px Arial";
-    ctx.textAlign = "center";
     ctx.fillText("Push your oppenent off the platform", gamecanvas.width / 2, 150);
 
     ctx.font = "15px Arial";
     ctx.textAlign = "center";
-    ctx.fillText("Press Space Bar to begin", gamecanvas.width / 2, 250);
+
+    ctx.fillText("Player One:", gamecanvas.width / 2, 250);
+    ctx.fillText("UP: w    LEFT: a    RIGHT: d", gamecanvas.width / 2, 280);
+
+    ctx.fillText("Player Two:", gamecanvas.width / 2, 340);
+    ctx.fillText("UP: up arrow    LEFT: left arrow    RIGHT: right arrow", gamecanvas.width / 2, 370);
+
+
+    ctx.fillText("Press Space Bar to begin", gamecanvas.width / 2, 450);
 }
 welcome();
