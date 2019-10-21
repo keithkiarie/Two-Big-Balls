@@ -28,6 +28,8 @@ function Ball(x, y, radius, color) {
     this.move = () => {
 
         this.x += this.velocity;
+        this.left_edge = this.x - this.radius;
+        this.right_edge = this.x + this.radius;
 
         //up
         if (this.key == "up" && this.falling == false) {

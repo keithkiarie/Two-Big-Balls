@@ -14,7 +14,7 @@ window.addEventListener('keydown', function (e) {
     }
     if (e.keyCode == 68) {
         balls.ball1.key = 'right';
-        balls.ball1.velocity = +ball_displacement.default; //right
+        balls.ball1.velocity = ball_displacement.default; //right
     }
 
 });
@@ -31,7 +31,7 @@ window.addEventListener('keydown', function (e) {
     }
     if (e.keyCode == 39) {
         balls.ball2.key = 'right';
-        balls.ball2.velocity = +ball_displacement.default; //right
+        balls.ball2.velocity = ball_displacement.default; //right
     }
 
 });

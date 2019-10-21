@@ -60,14 +60,45 @@ function collision() {
     let ball1 = balls.ball1;
     let ball2 = balls.ball2;
 
-    if (ball1.right_edge + ball1.velocity >= ball2.left_edge + ball2.velocity && ball1.x < ball2.x) {
-        alert('boom');
-    } else if (ball2.right_edge + ball2.velocity >= ball1.left_edge + ball1.velocity && ball2.x < ball1.x) {
-        alert('boom');
-    } else if (ball1.left_edge + ball1.velocity <= ball2.right_edge + ball2.velocity && ball1.x > ball2.x) {
-        alert('boom');
-    } else if (ball2.left_edge + ball2.velocity <= ball1.right_edge + ball1.velocity && ball1.x < ball2.x) {
-        alert('boom');
+    //one ball falling on another
+    if (ball1.y != ball2.y && ball1.within_platform == true && ball2.within_platform == true) {
+        if (ball1.x == ball2.x) {
+            if (ball1.y + ball1.radius >= ball2.y && ball1.falling == true) {
+                ball1.falling = false;
+                ball1.y = ball2.y - ball2.radius;
+            } else if (ball2.y + ball2.radius >= ball1.y && ball2.falling == true) {
+                ball2.falling = false;
+                ball2.y = ball1.y - ball1.radius;
+            }
+        } else if (ball1.x < ball2.x) {
+            if (ball1.y + ball1.radius >= ball2.y && ball1.falling == true) {
+                ball1.velocity = -ball_displacement.default;
+                ball2.velocity = ball_displacement.default;
+            } else if (ball2.y + ball2.radius >= ball1.y && ball2.falling == true) {
+                ball2.velocity = ball_displacement.default;
+                ball1.velocity = -ball_displacement.default;
+            }
+        } else if (ball1.x > ball2.x) {
+            if (ball1.y + ball1.radius >= ball2.y && ball1.falling == true) {
+                ball1.velocity = ball_displacement.default;
+                ball2.velocity = -ball_displacement.default;
+            } else if (ball2.y + ball2.radius >= ball1.y && ball2.falling == true) {
+                ball2.velocity = ball_displacement.default;
+                ball1.velocity = -ball_displacement.default;
+            }
+        }
+    }
+
+    if (
+        (ball1.right_edge + ball1.velocity > ball2.left_edge + ball2.velocity && ball1.x < ball2.x && ball1.y == ball2.y) ||
+        (ball2.right_edge + ball2.velocity > ball1.left_edge + ball1.velocity && ball2.x < ball1.x && ball1.y == ball2.y) ||
+        (ball1.left_edge + ball1.velocity < ball2.right_edge + ball2.velocity && ball1.x > ball2.x && ball1.y == ball2.y) ||
+        (ball2.left_edge + ball2.velocity < ball1.right_edge + ball1.velocity && ball2.x > ball1.x && ball1.y == ball2.y)
+    ) {
+
+        let temp = ball1.velocity;
+        ball1.velocity = ball2.velocity;
+        ball2.velocity = temp;
     }
 
 }
