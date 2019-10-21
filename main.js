@@ -65,13 +65,7 @@ function gameplay() {
     }
 }
 
-function friction() {
-    for (const i in balls) {
-        if (balls[i].key == false) {
-            balls[i].velocity *= 0.99;
-        }
-    }
-}
+
 
 function labels() {
     //draw labels

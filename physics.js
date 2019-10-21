@@ -78,3 +78,11 @@ function mid_air() {
         balls[i].move();
     }
 }
+
+function friction() {
+    for (const i in balls) {
+        if (balls[i].key == false) {
+            balls[i].velocity *= 0.99;
+        }
+    }
+}
