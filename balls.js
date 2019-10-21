@@ -53,7 +53,9 @@ function Ball(x, y, radius, color) {
             this.rising = false;
             this.falling = true;
             this.x < platform.x_start ? this.x = platform.x_start - this.radius - 5 : this.x = platform.x_end + this.radius + 5;
-            game_session = false;
+            if (this.y - this.radius > gamecanvas.height) {
+                game_session = false;
+            }
         }
 
     };

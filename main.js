@@ -57,7 +57,9 @@ function gameplay() {
 
     drawing();
     labels();
-    requestAnimationFrame(gameplay);
+    if (game_session) {
+        requestAnimationFrame(gameplay);
+    }
 }
 
 function friction() {
