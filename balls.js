@@ -4,18 +4,18 @@ function Ball(x, y, radius, color, player) {
     this.x = x;
     this.y = y;
 
-    this.right_edge = this.x + this.radius;
-    this.left_edge = this.x - this.radius;
+    this.right_edge = this.x + this.radius; //right-most part of the ball
+    this.left_edge = this.x - this.radius; //left-most part of the ball
 
     this.gravity = 12;
     this.color = color;
-    this.key = false;
-    this.falling = false;
+    this.key = false; // if a key is being pressed
+    this.falling = false; // if the ball is falling
     this.within_platform = true;
-    this.rising = false;
+    this.rising = false; //if the ball is rising (jump)
     this.velocity = 0;
 
-    this.sped_up = false;
+    this.sped_up = false; // to increase the velocity of the ball during longpress 
 
 
     this.draw = () => {
