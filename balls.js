@@ -13,7 +13,10 @@ function Ball(x, y, radius, color, player) {
     this.falling = false; // if the ball is falling
     this.within_platform = true;
     this.rising = false; //if the ball is rising (jump)
-    this.velocity = 0;
+
+    //velocities of the ball
+    this.unit_x = 0;
+    this.unit_y = 0;
 
     this.sped_up = false; // to increase the velocity of the ball during longpress 
 
@@ -28,7 +31,7 @@ function Ball(x, y, radius, color, player) {
 
     this.move = () => {
 
-        this.x += this.velocity;
+        this.x += this.unit_x;
         this.left_edge = this.x - this.radius;
         this.right_edge = this.x + this.radius;
 
@@ -40,7 +43,7 @@ function Ball(x, y, radius, color, player) {
         if (this.key == "left" || this.key == "right") {
             setTimeout(() => {
                 if (this.key != false && !this.sped_up) {
-                    this.velocity *= ball_displacement.speed_factor;
+                    this.unit_x *= ball_displacement.speed_factor;
                     this.sped_up = true;
                 }
             }, 500);
