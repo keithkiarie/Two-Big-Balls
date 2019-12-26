@@ -15,33 +15,33 @@ function collision() {
             }
         } else if (ball1.x < ball2.x && ball2.x - ball1.x <= ball2.radius * 2) {
             if (ball1.y + ball1.radius >= ball2.y && ball1.falling == true) {
-                ball1.velocity = -ball_displacement.default;
-                ball2.velocity = ball_displacement.default;
+                ball1.unit_x = -ball_displacement.default;
+                ball2.unit_x = ball_displacement.default;
             } else if (ball2.y + ball2.radius >= ball1.y && ball2.falling == true) {
-                ball2.velocity = ball_displacement.default;
-                ball1.velocity = -ball_displacement.default;
+                ball2.unit_x = ball_displacement.default;
+                ball1.unit_x = -ball_displacement.default;
             }
         } else if (ball1.x > ball2.x && ball1.x - ball2.x <= ball1.radius * 2) {
             if (ball1.y + ball1.radius >= ball2.y && ball1.falling == true) {
-                ball1.velocity = ball_displacement.default;
-                ball2.velocity = -ball_displacement.default;
+                ball1.unit_x = ball_displacement.default;
+                ball2.unit_x = -ball_displacement.default;
             } else if (ball2.y + ball2.radius >= ball1.y && ball2.falling == true) {
-                ball2.velocity = ball_displacement.default;
-                ball1.velocity = -ball_displacement.default;
+                ball2.unit_x = ball_displacement.default;
+                ball1.unit_x = -ball_displacement.default;
             }
         }
     }
 
     if (
-        (ball1.right_edge + ball1.velocity > ball2.left_edge + ball2.velocity && ball1.x < ball2.x && ball1.y == ball2.y) ||
-        (ball2.right_edge + ball2.velocity > ball1.left_edge + ball1.velocity && ball2.x < ball1.x && ball1.y == ball2.y) ||
-        (ball1.left_edge + ball1.velocity < ball2.right_edge + ball2.velocity && ball1.x > ball2.x && ball1.y == ball2.y) ||
-        (ball2.left_edge + ball2.velocity < ball1.right_edge + ball1.velocity && ball2.x > ball1.x && ball1.y == ball2.y)
+        (ball1.right_edge + ball1.unit_x > ball2.left_edge + ball2.unit_x && ball1.x < ball2.x && ball1.y == ball2.y) ||
+        (ball2.right_edge + ball2.unit_x > ball1.left_edge + ball1.unit_x && ball2.x < ball1.x && ball1.y == ball2.y) ||
+        (ball1.left_edge + ball1.unit_x < ball2.right_edge + ball2.unit_x && ball1.x > ball2.x && ball1.y == ball2.y) ||
+        (ball2.left_edge + ball2.unit_x < ball1.right_edge + ball1.unit_x && ball2.x > ball1.x && ball1.y == ball2.y)
     ) {
 
-        let temp = ball1.velocity;
-        ball1.velocity = ball2.velocity;
-        ball2.velocity = temp;
+        let temp = ball1.unit_x;
+        ball1.unit_x = ball2.unit_x;
+        ball2.unit_x = temp;
     }
 
     //if they're stuck
@@ -82,7 +82,7 @@ function mid_air() {
 function friction() {
     for (const i in balls) {
         if (balls[i].key == false) {
-            balls[i].velocity *= 0.99;
+            balls[i].unit_x *= 0.99;
         }
     }
 }
