@@ -24,10 +24,12 @@ const ball_collision = () => {
 
         let a_new_unit = change_angles(v1.x, v1.y, -angle);
         let b_new_unit = change_angles(v2.x, v2.y, -angle);
+
         ballA.unit_x = a_new_unit.x;
-        ballA.unit_y = a_new_unit.y;
+        ballA.unit_y = -a_new_unit.y;
+
         ballB.unit_x = b_new_unit.x;
-        ballB.unit_y = b_new_unit.y;
+        ballB.unit_y = -b_new_unit.y;
     }
 }
 
