@@ -1,4 +1,4 @@
-const ball_collision = (ballA, ballB) => {
+const ball_collision = () => {
 
     let ballA = balls.ball1;
     let ballB = balls.ball2;
