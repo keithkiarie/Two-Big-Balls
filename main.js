@@ -64,8 +64,8 @@ function gameplay() {
         ball_collision();
     }
 
-    balls.ball1.move();
-    balls.ball2.move();
+    !balls.ball1.falling ? balls.ball1.move() : balls.ball1.fall();
+    !balls.ball2.falling ? balls.ball2.move() : balls.ball2.fall();
 
     if (game_session) {
         requestAnimationFrame(gameplay);

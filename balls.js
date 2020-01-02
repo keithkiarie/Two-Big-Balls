@@ -78,12 +78,13 @@ function Ball(x, y, radius, color, player) {
             this.within_platform = false;
             this.rising = false;
             this.falling = true;
-            this.x < platform.x_start ? this.x = platform.x_start - this.radius - 5 : this.x = platform.x_end + this.radius + 5;
-            if (this.y - this.radius > gamecanvas.height) {
-                game_session = false;
 
-                this.player == 1 ? scores.player_two++ : scores.player_one++;
+            if (this.x < platform.x_start && platform.x_start - this.x <= 5) {
+                this.x = platform.x_start - this.radius - 5;
+            } else if (this.x > platform.x_end && this.x - platform.x_end <= 5) {
+                this.x = platform.x_end + this.radius + 5
             }
+            
         }
 
         //bounce off wall if mid air
@@ -92,4 +93,15 @@ function Ball(x, y, radius, color, player) {
         }
 
     };
+
+    this.fall = () => {
+        this.unit_y -= this.gravity;
+        this.y -= this.unit_y;
+
+        if (this.y - this.radius > gamecanvas.height) {
+            game_session = false;
+
+            this.player == 1 ? scores.player_two++ : scores.player_one++;
+        }
+    }
 }
