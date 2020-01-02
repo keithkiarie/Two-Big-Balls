@@ -13,6 +13,7 @@ function Ball(x, y, radius, color, player) {
 
     this.jump_displacement = 12;
     this.gravity = 0.2; //brings the ball down
+    this.friction = 0.2; //reduce the speed of horizontal movement
     this.color = color;
     this.key = false; // if a key is being pressed
     this.within_platform = true;
@@ -38,7 +39,11 @@ function Ball(x, y, radius, color, player) {
         this.x += this.unit_x;
         this.y += this.unit_y;
         
+        //action of gravity
         this.unit_y < 0 ? this.unit_y += this.gravity : this.unit_y = 0;
+
+        //action of friction
+        this.unit_x > 0 ? this.unit_x -= this.friction : this.unit_x = 0;
         
 
         //up

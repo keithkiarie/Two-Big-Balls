@@ -62,13 +62,15 @@ function mid_air() {
                 balls[i].rising = false;
                 balls[i].falling = true;
             }
-            balls[i].y -= balls[i].gravity;
+            
+            //change the rising velocity here
+            balls[i].y -= balls[i].unit_y;
         }
 
         if (balls[i].falling == true) {
             if ((balls[i].within_platform && balls[i].y + balls[i].radius < platform.y) ||
                 !balls[i].within_platform) {
-                balls[i].y += balls[i].gravity;
+                balls[i].y -= balls[i].gravity;
             }
             if (balls[i].y + balls[i].radius >= platform.y && balls[i].within_platform) {
                 balls[i].y = platform.y - balls[i].radius;
@@ -76,13 +78,5 @@ function mid_air() {
             }
         }
         balls[i].move();
-    }
-}
-
-function friction() {
-    for (const i in balls) {
-        if (balls[i].key == false) {
-            balls[i].unit_x *= 0.99;
-        }
     }
 }
