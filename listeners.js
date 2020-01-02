@@ -7,7 +7,7 @@ window.addEventListener('keydown', function (e) {
     }
 
     //ball1 keydown
-    if (e.keyCode == 87 && game_session && !balls.ball1.mid_air) {
+    if (e.keyCode == 87 && game_session && !balls.ball1.mid_air && !balls.ball1.falling) {
             balls.ball1.key = 'up';
             balls.ball1.unit_y = balls.ball1.jump_displacement;
     }
@@ -25,7 +25,7 @@ window.addEventListener('keydown', function (e) {
 window.addEventListener('keydown', function (e) {
 
     //ball2 keydown
-    if (e.keyCode == 38 && game_session && !balls.ball2.mid_air) {
+    if (e.keyCode == 38 && game_session && !balls.ball2.mid_air && !balls.ball2.falling) {
             balls.ball2.key = 'up';
             balls.ball2.unit_y = balls.ball2.jump_displacement;
     }
