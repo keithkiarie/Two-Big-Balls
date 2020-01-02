@@ -4,15 +4,19 @@ function Ball(x, y, radius, color, player) {
     this.x = x;
     this.y = y;
 
-    this.right_edge = this.x + this.radius; //right-most part of the ball
-    this.left_edge = this.x - this.radius; //left-most part of the ball
+    this.right_edge = () => {
+        return this.x + this.radius; //right-most part of the ball
+    }
+    this.left_edge = () => {
+        return this.x - this.radius; //left-most part of the ball
+    }
 
-    this.gravity = 12;
+    this.jump_displacement = 12; // not yet integrated
+    this.gravity = 0.2; //brings the ball down
     this.color = color;
     this.key = false; // if a key is being pressed
-    this.falling = false; // if the ball is falling
     this.within_platform = true;
-    this.rising = false; //if the ball is rising (jump)
+    this.mid_air = false; //if the ball is mid air (jump)
 
     //velocities of the ball
     this.unit_x = 0;
@@ -32,12 +36,15 @@ function Ball(x, y, radius, color, player) {
     this.move = () => {
 
         this.x += this.unit_x;
-        this.left_edge = this.x - this.radius;
-        this.right_edge = this.x + this.radius;
+        this.y += this.unit_y;
+        
+        this.unit_y < 0 ? this.unit_y += this.gravity : this.unit_y = 0;
+        
 
         //up
-        if (this.key == "up" && this.falling == false) {
-            this.rising = true;
+        if (this.key == "up" && !this.mid_air) {
+            this.mid_air = true;
+            this.unit_y = this.jump_displacement;
         }
 
         if (this.key == "left" || this.key == "right") {
