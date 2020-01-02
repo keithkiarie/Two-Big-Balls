@@ -26,7 +26,7 @@ let platform = {
 
 
 
-function erase_canvas() {
+function init_canvas() {
     //paint the canvas black
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, gamecanvas.width, gamecanvas.height);
@@ -43,7 +43,7 @@ let balls = {
 
 function start_game() {
     game_session = true;
-    erase_canvas();
+    init_canvas();
 
     //create the balls
     balls.ball1 = new Ball(gamecanvas.width * 0.15, gamecanvas.height * 0.7 - 50, 50, "red", 1);
@@ -53,20 +53,19 @@ function start_game() {
 }
 
 function gameplay() {
-    mid_air();
-    collision();
-    friction();
 
     drawing();
-    labels();
     display_scores();
     
+    balls.ball1.move();
+    balls.ball2.move();
+
     if (game_session) {
         requestAnimationFrame(gameplay);
     } else {
         ctx.font = "30px Arial";
         ctx.textAlign = "center";
-        ctx.fillStyle = "#FFFFFF"
+        ctx.fillStyle = "#FFFFFF";
         ctx.fillText("Press Space Bar to restart game", gamecanvas.width / 2, 50);
     }
 }
@@ -74,7 +73,7 @@ function gameplay() {
 function display_scores() {
     ctx.font = "30px Arial";
     ctx.textAlign = "center";
-    ctx.fillStyle = "#FFFFFF"
+    ctx.fillStyle = "#FFFFFF";
     ctx.fillText(`${scores.player_one} : ${scores.player_two}`, gamecanvas.width / 2, 150);
 }
 
@@ -95,9 +94,11 @@ function labels() {
 
 
 function drawing() {
-    erase_canvas();
+    init_canvas();
     balls.ball1.draw();
     balls.ball2.draw();
+
+    labels();
 }
 
 
