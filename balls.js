@@ -4,18 +4,26 @@ function Ball(x, y, radius, color, player) {
     this.x = x;
     this.y = y;
 
-    this.right_edge = this.x + this.radius;
-    this.left_edge = this.x - this.radius;
+    this.right_edge = () => {
+        return this.x + this.radius; //right-most part of the ball
+    }
+    this.left_edge = () => {
+        return this.x - this.radius; //left-most part of the ball
+    }
 
-    this.gravity = 12;
+    this.jump_displacement = 12;
+    this.gravity = 0.25; //brings the ball down
+    this.friction = 0.25; //reduce the speed of horizontal movement
     this.color = color;
-    this.key = false;
-    this.falling = false;
+    this.key = false; // if a key is being pressed
     this.within_platform = true;
-    this.rising = false;
-    this.velocity = 0;
+    this.mid_air = false; //if the ball is mid air (jump)
 
-    this.sped_up = false;
+    //velocities of the ball
+    this.unit_x = 0;
+    this.unit_y = 0;
+
+    this.sped_up = false; // to increase the velocity of the ball during longpress 
 
 
     this.draw = () => {
@@ -28,19 +36,40 @@ function Ball(x, y, radius, color, player) {
 
     this.move = () => {
 
-        this.x += this.velocity;
-        this.left_edge = this.x - this.radius;
-        this.right_edge = this.x + this.radius;
+        this.x += this.unit_x;
+        this.y -= this.unit_y;
+
+        //check if the ball is mid air
+        this.y + this.radius < platform.y ? this.mid_air = true : this.mid_air = false;
+        
+
+        //action of gravity
+        if (this.y + this.radius < platform.y) {
+            this.unit_y -= this.gravity;
+        } else {
+            this.unit_y = 0;
+            this.y = platform.y - this.radius;
+        }
+
+        //action of friction
+        if (this.unit_x > this.gravity) {
+            this.unit_x -= this.gravity;
+        } else if (this.unit_x < -this.gravity) {
+            this.unit_x += this.gravity;
+        } else {
+            this.unit_x = 0;
+        }
+
 
         //up
-        if (this.key == "up" && this.falling == false) {
-            this.rising = true;
+        if (this.key == "up" && !this.mid_air) {
+
         }
 
         if (this.key == "left" || this.key == "right") {
             setTimeout(() => {
                 if (this.key != false && !this.sped_up) {
-                    this.velocity *= ball_displacement.speed_factor;
+                    this.unit_x *= ball_displacement.speed_factor;
                     this.sped_up = true;
                 }
             }, 500);
@@ -49,17 +78,34 @@ function Ball(x, y, radius, color, player) {
 
 
         //fall off
-        if (this.x < platform.x_start || this.x > platform.x_end) {
+        if ((this.x < platform.x_start || this.x > platform.x_end) && (this.y + this.radius >= platform.y)) {
             this.within_platform = false;
             this.rising = false;
             this.falling = true;
-            this.x < platform.x_start ? this.x = platform.x_start - this.radius - 5 : this.x = platform.x_end + this.radius + 5;
-            if (this.y - this.radius > gamecanvas.height) {
-                game_session = false;
 
-                this.player == 1 ? scores.player_two++ : scores.player_one++;
+            if (this.x < platform.x_start && platform.x_start - this.x <= 5) {
+                this.x = platform.x_start - this.radius - 5;
+            } else if (this.x > platform.x_end && this.x - platform.x_end <= 5) {
+                this.x = platform.x_end + this.radius + 5
             }
+            
+        }
+
+        //bounce off wall if mid air
+        if ((this.left_edge() <= 0 || this.right_edge() >= gamecanvas.width) && (this.y + this.radius < platform.y)) {
+            this.unit_x = -this.unit_x;
         }
 
     };
+
+    this.fall = () => {
+        this.unit_y -= this.gravity;
+        this.y -= this.unit_y;
+
+        if (this.y - this.radius > gamecanvas.height) {
+            game_session = false;
+
+            this.player == 1 ? scores.player_two++ : scores.player_one++;
+        }
+    }
 }
