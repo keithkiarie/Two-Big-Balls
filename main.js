@@ -64,6 +64,7 @@ function gameplay() {
         ball_collision();
     }
 
+    //ball movements
     !balls.ball1.falling ? balls.ball1.move() : balls.ball1.fall();
     !balls.ball2.falling ? balls.ball2.move() : balls.ball2.fall();
 
