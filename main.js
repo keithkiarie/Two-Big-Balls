@@ -57,6 +57,13 @@ function gameplay() {
     drawing();
     display_scores();
     
+    //ball collision
+    let minimum_dist = balls.ball1.radius * 2 + 5;
+    if (balls.ball1.x - balls.ball2.x > -minimum_dist && balls.ball1.x - balls.ball2.x < minimum_dist &&
+        balls.ball1.y - balls.ball2.y > -minimum_dist && balls.ball1.y - balls.ball2.y < minimum_dist) {
+        ball_collision();
+    }
+
     balls.ball1.move();
     balls.ball2.move();
 
