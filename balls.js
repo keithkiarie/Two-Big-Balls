@@ -39,6 +39,10 @@ function Ball(x, y, radius, color, player) {
         this.x += this.unit_x;
         this.y -= this.unit_y;
 
+        //check if the ball is mid air
+        this.y + this.radius < platform.y ? this.mid_air = true : this.mid_air = false;
+        
+
         //action of gravity
         if (this.y + this.radius < platform.y) {
             this.unit_y -= this.gravity;
