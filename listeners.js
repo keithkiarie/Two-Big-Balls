@@ -27,7 +27,7 @@ window.addEventListener('keydown', function (e) {
     //ball2 keydown
     if (e.keyCode == 38 && game_session && !balls.ball2.mid_air) {
             balls.ball2.key = 'up';
-            balls.ball2.unit_y = balls.ball2jump_displacement;
+            balls.ball2.unit_y = balls.ball2.jump_displacement;
     }
     if (e.keyCode == 37  && game_session) {
         balls.ball2.key = 'left';
@@ -52,7 +52,7 @@ window.addEventListener('keyup', function (e) {
     }
     if (e.keyCode == 68 && game_session) {
         balls.ball1.key = false;
-        balls.ball2.sped_up = false;
+        balls.ball1.sped_up = false;
     }
 });
 
