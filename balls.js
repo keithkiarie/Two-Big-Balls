@@ -36,20 +36,26 @@ function Ball(x, y, radius, color, player) {
 
     this.move = () => {
 
+        //ball_collision();
         this.x += this.unit_x;
         this.y += this.unit_y;
-        
+
         //action of gravity
         this.unit_y < 0 ? this.unit_y += this.gravity : this.unit_y = 0;
 
         //action of friction
-        this.unit_x > 0 ? this.unit_x -= this.friction : this.unit_x = 0;
-        
+        if (this.unit_x > this.gravity) {
+            this.unit_x -= this.gravity;
+        } else if (this.unit_x < -this.gravity) {
+            this.unit_x += this.gravity;
+        } else {
+            this.unit_x = 0;
+        }
+
 
         //up
         if (this.key == "up" && !this.mid_air) {
-            this.mid_air = true;
-            this.unit_y = this.jump_displacement;
+
         }
 
         if (this.key == "left" || this.key == "right") {
