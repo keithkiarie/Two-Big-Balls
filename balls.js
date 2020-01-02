@@ -11,7 +11,7 @@ function Ball(x, y, radius, color, player) {
         return this.x - this.radius; //left-most part of the ball
     }
 
-    this.jump_displacement = 12; // not yet integrated
+    this.jump_displacement = 12;
     this.gravity = 0.2; //brings the ball down
     this.color = color;
     this.key = false; // if a key is being pressed
